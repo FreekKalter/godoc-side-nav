@@ -9,6 +9,7 @@
 	them to conflict with generated attributes (some of which
 	correspond to Go identifiers).
 -->
+<script type='text/javascript' src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 {{with .PDoc}}
 	<script type='text/javascript'>
 	document.ANALYSIS_DATA = {{$.AnalysisData}};
@@ -247,10 +248,9 @@
 			</dl>
 		</div>
 		<h2 id="stdlib">Standard library</h2>
-		<img class="gopher" src="/doc/gopher/pkg.png"/>
 	{{end}}
-    <div class="row">
-    <div class="col-md-4">
+    <div id="mainRow" class="row">
+    <div id="side-nav" class="col-md-2">
         <table class="dir">
         <tr>
         <th>Name</th>
@@ -266,14 +266,14 @@
             {{if $.DirFlat}}
                 {{if .HasPkg}}
                     <tr>
-                    <td class="name"><a href="{{html .Path}}/">{{html .Path}}</a></td>
+                        <td class="name"><a onclick="loadPkg('{{.Path}}')">{{html .Path}}</a></td>
                         <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                     <!--<td style="width: auto">{{html .Synopsis}}</td>-->
                     </tr>
                 {{end}}
             {{else}}
                 <tr>
-                <td class="name">{{repeat `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` .Depth}}<a href="{{html .Path}}/">{{html .Name}}</a></td>
+                    <td class="name">{{repeat `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` .Depth}}<a onclick="loadPkg('{{.Path}}')">{{html .Name}}</a></td>
                     <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                 <!--<td style="width: auto">{{html .Synopsis}}</td>-->
                 </tr>
@@ -281,7 +281,7 @@
         {{end}}
         </table>
     </div><!-- small column -->
-    <div class="col-md-8">
+    <div id="mainView" class="col-md-10">
     </div>
     </div><!-- row -->
 	{{if eq $.Dirname "/src"}}
@@ -314,3 +314,29 @@
 	</ul>
 	{{end}}
 {{end}}
+
+<script type="text/javascript" >
+ $(document).ready(function() {
+    var h = $("#side-nav").height();
+    $("#mainRow").scrollTop(h);
+});
+function loadPkg(name){
+    var xmlhttp;
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+               document.getElementById("mainView").innerHTML = xmlhttp.responseText;
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400')
+           }
+           else {
+               alert('something else other than 200 was returned')
+           }
+        }
+    }
+    xmlhttp.open("GET", name, true);
+    xmlhttp.send();
+}
+</script>
