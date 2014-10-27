@@ -19,6 +19,7 @@ $(function(){
 function loadPkg(name){
     $.get(name, function(data){
            $("#mainView").html(data);
+           $("#mainView").scrollTop(0);
     });
 }
 </script>
@@ -274,7 +275,11 @@ function loadPkg(name){
                 {{end}}
             {{else}}
                 <tr>
-                    <td class="name">{{repeat `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` .Depth}}<a onclick="loadPkg('{{.Path}}')">{{html .Name}}</a></td>
+                    {{ if .HasPkg }}
+                        <td class="name">{{repeat `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` .Depth}}<a onclick="loadPkg('{{.Path}}')">{{html .Name}}</a></td>
+                    {{else}}
+                        <td class="name">{{repeat `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` .Depth}}<span class="arrow-right"></span>{{html .Name}}</td>
+                    {{end}}
                     <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                 <!--<td style="width: auto">{{html .Synopsis}}</td>-->
                 </tr>
