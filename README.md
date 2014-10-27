@@ -11,12 +11,12 @@ a few hacks to make it a little easier to use on a daily basis.
 Clone this repo and feed it to godoc with the -templates flag.
 
 ```
-git clone github.com/FreekKalter/godoc-side-nav
+git clone https://github.com/FreekKalter/godoc-side-nav
 godoc -http=:6060 -templates="./godoc-side-nav"
 ```
 
 ## Disclaimer
-I am a by no means a 'front-end guy', so any pull request are welcome.
+I am a by no means a 'front-end guy' (wich most of these hacks are), so any pull request are welcome.
 
 ## *TODO*
 
