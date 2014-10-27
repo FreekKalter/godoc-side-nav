@@ -4,12 +4,24 @@
 	license that can be found in the LICENSE file.
 -->
 <!--
-	Note: Static (i.e., not template-generated) href and id
+   Note: Static (i.e., not template-generated) href and id
 	attributes start with "pkg-" to make it impossible for
 	them to conflict with generated attributes (some of which
 	correspond to Go identifiers).
 -->
 <script type='text/javascript' src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" >
+$(function(){
+        var columnHeight = $(window).height()-$('h1:first').outerHeight(true);
+        $('#mainView').css({"max-height": columnHeight});
+        $('#side-nav').css({"max-height": columnHeight});
+});
+function loadPkg(name){
+    $.get(name, function(data){
+           $("#mainView").html(data);
+    });
+}
+</script>
 {{with .PDoc}}
 	<script type='text/javascript'>
 	document.ANALYSIS_DATA = {{$.AnalysisData}};
@@ -238,17 +250,6 @@
 	{{if $.PDoc}}
 		<h2 id="pkg-subdirectories">Subdirectories</h2>
 	{{end}}
-	{{if eq $.Dirname "/src"}}
-		<div id="manual-nav">
-			<dl>
-				<dt><a href="#stdlib">Standard library</a></dt>
-				<dt><a href="#other">Other packages</a></dt>
-				<dd><a href="#subrepo">Sub-repositories</a></dd>
-				<dd><a href="#community">Community</a></dd>
-			</dl>
-		</div>
-		<h2 id="stdlib">Standard library</h2>
-	{{end}}
     <div id="mainRow" class="row">
     <div id="side-nav" class="col-md-2">
         <table class="dir">
@@ -284,59 +285,5 @@
     <div id="mainView" class="col-md-10">
     </div>
     </div><!-- row -->
-	{{if eq $.Dirname "/src"}}
-	<h2 id="other">Other packages</h2>
-
-	<h3 id="subrepo">Sub-repositories</h3>
-	<p>
-	These packages are part of the Go Project but outside the main Go tree.
-	They are developed under looser <a href="/doc/go1compat">compatibility requirements</a> than the Go core.
-	Install them with "<a href="/cmd/go/#hdr-Download_and_install_packages_and_dependencies">go get</a>".
-	</p>
-	<ul>
-		<li><a href="//godoc.org/code.google.com/p/go.crypto">crypto</a> — additional cryptography packages.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.image">image</a> — additional imaging packages.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.net">net</a> — additional networking packages.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.sys">sys</a> — packages for making system calls.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.text">text</a> — packages for working with text.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.tools">tools</a> — godoc, vet, cover, and other tools.</li>
-		<li><a href="//godoc.org/code.google.com/p/go.exp">exp</a> — experimental code (handle with care; may change without warning).</li>
-	</ul>
-
-	<h3 id="community">Community</h3>
-	<p>
-	These services can help you find Open Source packages provided by the community.
-	</p>
-	<ul>
-		<li><a href="//godoc.org">GoDoc</a> - a package index and search engine.</li>
-		<li><a href="http://go-search.org">Go Search</a> - a code search engine.</li>
-		<li><a href="/wiki/Projects">Projects at the Go Wiki</a> - a curated list of Go projects.</li>
-	</ul>
-	{{end}}
 {{end}}
 
-<script type="text/javascript" >
- $(document).ready(function() {
-    var h = $("#side-nav").height();
-    $("#mainRow").scrollTop(h);
-});
-function loadPkg(name){
-    var xmlhttp;
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 ) {
-           if(xmlhttp.status == 200){
-               document.getElementById("mainView").innerHTML = xmlhttp.responseText;
-           }
-           else if(xmlhttp.status == 400) {
-              alert('There was an error 400')
-           }
-           else {
-               alert('something else other than 200 was returned')
-           }
-        }
-    }
-    xmlhttp.open("GET", name, true);
-    xmlhttp.send();
-}
-</script>

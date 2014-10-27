@@ -1,0 +1,6 @@
+# godoc sid-nav
+
+View the package documentation with a side navigation of all the available packages. This gives a big pane
+to read the documentation for a given package, and on the left you can switch very fast to another package.
+
+## Usage
