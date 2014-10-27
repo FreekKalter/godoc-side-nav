@@ -20,5 +20,8 @@ I am a by no means a 'front-end guy' (wich most of these hacks are), so any pull
 
 ## *TODO*
 
-- figure out what causes the glitch when switching to a package in another branch
+- Make it all alot simpler, no more recursion, clean up all unused files
+    - basicly start from scratch with the pieces i know now
+    - figure out what causes the glitch when switching to a package in another branch
+      (this will figure it self out after the refactor probaly)
 - make side-nav interactive by colapsing treebranches
