@@ -18,8 +18,7 @@ godoc -http=:6060 -templates="./godoc-side-nav"
 ## Disclaimer
 I am a by no means a 'front-end guy', so any pull request are welcome.
 
-## TODO
+## *TODO*
 
-- figure out a sensible way to scroll both frames independly
-- use jquery for loadPkg function
-
+- figure out what causes the glitch when switching to a package in another branch
+- make side-nav interactive by colapsing treebranches
